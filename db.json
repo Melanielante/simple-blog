@@ -20,6 +20,13 @@
       "author": "MELANIE",
       "content": "Let's talk about how Africa is rising in the tech world.",
       "image": "https://media.istockphoto.com/id/2183335357/photo/digital-map-of-africa-continent-with-futuristic-circuit-design.webp?a=1&b=1&s=612x612&w=0&k=20&c=a__4umpccpuFlm7dZZdedMLTwVL77vCuPegOF3CMkhk="
+    },
+    {
+      "title": "Frontend Development",
+      "author": "AKINYI",
+      "image": "",
+      "content": "In frontend development we mainly use html, css and javascript.",
+      "id": 4
     }
   ]
 }

@@ -26,6 +26,11 @@ function displayPosts() {
 
             postList.appendChild(postItem);
         });
+
+        // showing the first post in the detail view section
+        if(posts.length > 0) {
+            handlePostClick(posts[0].id);
+        }
     })
 }
 
