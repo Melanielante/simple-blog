@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog App</title>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+    <header>
+        <h1>MY BLOG APP</h1>
+        <P>Share your thoughtts with the world</P>
+    </header>
+
+    <div class="container">
+        <!-- left sidebar -->
+        <section id="sidebar">
+            <h2>Posts</h2>
+            <div id="post-list">
+                <!-- blog title list will go here  -->
+            </div>
+
+            <h3>Add New Post</h3>
+            <form id="new-post-form">
+                <input type="text" name="title" placeholder="Title" required>
+                <input type="text" name="author" placeholder="Author" required>
+                <input type="text" name="image" placeholder="Image URL (optional)" >
+                <textarea name="content" placeholder="Content..." rows="4" required></textarea>
+
+                <button type="submit">Add Post</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+
+        <!-- right side  -->
+
+        <section id="main-view">
+
+            <div id="post-detail">
+                <p>Select a post to view details </p>
+            </div>
+
+        </section>
+    </div>
+
+      <!-- edit form -->
+    <form id="edit-post-form" class="hidden">
+        <h3>Edit Post</h3>
+        <input type="text" id="edit-title" name="title" required>
+        <textarea name="content" id="edit-content" rows="4" required></textarea>
+        <button type="submit">Update</button>
+        <button type="button" id="cancel-edit">Cancel</button>
+    </form>
+
+    <script src="./src/index.js"></script>
+
+</body>
+</html>

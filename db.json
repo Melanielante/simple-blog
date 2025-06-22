@@ -1,0 +1,25 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Welcome to My Blog",
+      "author": "MELANIE",
+      "content": "This is the first post. More to come!",
+      "image": "https://plus.unsplash.com/premium_photo-1687920677783-40e1e7dd08b2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHdlbGNvb21lJTIwdG8lMjBteSUyMGJsb2d8ZW58MHx8MHx8fDA%3D"
+    },
+    {
+      "id": 2,
+      "title": "Why I'm learning JavaScript",
+      "author": "MELANIE",
+      "content": "JavaScript is powerful and flexible. Here's why I use it...",
+      "image": "https://images.unsplash.com/photo-1649451844931-57e22fc82de3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bGVhcm5pbmclMjBqYXZhc2NyaXB0fGVufDB8fDB8fHww"
+    },
+    {
+      "id": 3,
+      "title": "Tech in Africa",
+      "author": "MELANIE",
+      "content": "Let's talk about how Africa is rising in the tech world.",
+      "image": "https://media.istockphoto.com/id/2183335357/photo/digital-map-of-africa-continent-with-futuristic-circuit-design.webp?a=1&b=1&s=612x612&w=0&k=20&c=a__4umpccpuFlm7dZZdedMLTwVL77vCuPegOF3CMkhk="
+    }
+  ]
+}

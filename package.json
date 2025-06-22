@@ -1,0 +1,22 @@
+{
+  "name": "simple-blog",
+  "version": "1.0.0",
+  "description": "a simple blog manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Melanielante/simple-blog.git"
+  },
+  "author": "MELANIE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Melanielante/simple-blog/issues"
+  },
+  "homepage": "https://github.com/Melanielante/simple-blog#readme",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
