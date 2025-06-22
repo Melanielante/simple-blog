@@ -71,3 +71,40 @@ function handlePostClick(id) {
 
     })
 }
+
+//function for editing the content
+function enableEditing(post) {
+    const form = document.getElementById("edit-post-form");
+    form.classList.remove("hidden");
+
+    //prefilling the form to be edited
+    document.getElementById("edit-title").value = post.title;
+    document.getElementById("edit-content").value = post.content;
+
+    //submitting 
+    form.onsubmit = (event) => {
+        event.preventDefault();
+
+        //getting the updates values
+        const updatedTitle = document.getElementById("edit-title").value;
+        const updatedContent = document.getElementById("edit-content").value;
+
+        //the updating the DOM
+        const postDetail = document.getElementById("post-detail");
+        postDetail.querySelector("h2").textContent = updatedTitle;
+        postDetail.querySelector("p:nth-of-type(2)").textContent = updatedContent;
+
+
+        //hide the form
+        form.classList.add("hidden");
+        form.reset(); 
+    };
+
+    //canccel button
+    const cancelBtn = document.getElementById("cancel-edit");
+    cancelBtn.addEventListener("click", () => {
+        form.classList.add("hidden");
+        form.reset();
+    });
+
+}

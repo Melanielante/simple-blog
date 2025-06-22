@@ -96,7 +96,7 @@ header p {
     padding: 20px;
     background-color: #e0efff;
     border-radius: 10px;
-    display: none;
+    /* display: none; */
     flex-direction: column;
 
     gap: 10px;
@@ -123,5 +123,5 @@ header p {
     background-color: #1d4ed8;
 }
 .hidden {
-    display: none;
+    /* display: none; */
 }
