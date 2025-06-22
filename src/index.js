@@ -60,8 +60,13 @@ function handlePostClick(id) {
         const content = document.createElement("p");
         content.textContent = post.content;
 
+        //edit button
+        const editBtn =  document.createElement("button");
+        editBtn.textContent = "Edit";
+        editBtn.addEventListener("click", () => enableEditing(post));
+
         //appending all created elements to post-detail
-        postDetail.append(title, author, image,content);
+        postDetail.append(title, author, image,content, editBtn);
 
 
     })
