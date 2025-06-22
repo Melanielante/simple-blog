@@ -38,7 +38,7 @@ This project is a dynamic blog post manager built using **vanilla JavaScript**. 
 ## 🛠 Tech Stack
 
 * HTML5
-* CSS3 (styled with shades of blue 🎨)
+* CSS3 (styled with shades of blue )
 * JavaScript (DOM, Fetch API)
 * JSON Server (`npm install -g json-server@0.17.4`)
 
@@ -61,7 +61,7 @@ This project is a dynamic blog post manager built using **vanilla JavaScript**. 
 
 ---
 
-## 🧠 Author
+## Author
 
 Created by **MELANIE** 
 
