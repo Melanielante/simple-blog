@@ -108,3 +108,73 @@ function enableEditing(post) {
     });
 
 }
+
+//adding new post
+function addNewPostListener() {
+    const form = document.getElementById("new-post-form");
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault;
+
+        //input values
+        const title = form.title.value;
+        const author = form.author.value;
+        const image = form.image.value;
+        const content = form.content.value;
+
+
+        //POST request
+        fetch(" http://localhost:3000/posts", {
+            method: "POST",
+            headers: {
+                "content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                title,
+                author,
+                image,
+                content,
+            }),
+        })
+        .then(res => res.json())
+        .then(newPost => {
+            //adding to post list
+            const postList = document.getElementById("post-list");
+            const postItem = document.createElement("div");
+            postItem.textContent = newPost.title;
+            postItem.classList.add("post-item");
+            postItem.dataset.id = newPost.id;
+
+
+            postItem.addEventListener("click", () => handlePostClick(newPost.id));
+            postList.appendChild(postItem);
+
+            // Show in post detail
+            const postDetail = document.getElementById("post-detail");
+            postDetail.innerHTML = "";
+
+            const titleEl = document.createElement("h2");
+            titleEl.textContent = newPost.title;
+
+            const authorEl = document.createElement("p");
+            authorEl.textContent = `By: ${newPost.author}`;
+
+            const imageEl = document.createElement("img");
+            imageEl.src = newPost.image || "";
+            imageEl.alt = newPost.title;
+            imageEl.style.maxWidth = "100%";
+
+            const contentEl = document.createElement("p");
+            contentEl.textContent = newPost.content;
+
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.addEventListener("click", () => enableEditing(newPost));
+
+            postDetail.append(titleEl, authorEl, imageEl, contentEl, editBtn);
+
+            // Reset form
+            form.reset();
+        })
+    });
+}
