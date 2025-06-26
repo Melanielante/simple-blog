@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", main);
 //fetching all the blog posts in the post-list container
 
 function displayPosts() {
-    fetch("http://localhost:3000/posts")
+    fetch("https://json-server-olgr.onrender.com/posts")
     .then(res => res.json())
     .then(posts => {
         const postList = document.getElementById("post-list");
@@ -37,7 +37,7 @@ function displayPosts() {
 // showing post details when the title is clicked on the sidebar
 
 function handlePostClick(id) {
-    fetch(`http://localhost:3000/posts/${id}`)
+    fetch(`https://json-server-olgr.onrender.com/posts/${id}`)
     .then(res => res.json())
     .then(post => {
         const postDetail = document.getElementById("post-detail");
@@ -129,7 +129,7 @@ function addNewPostListener() {
 
 
         //POST request
-        fetch(" http://localhost:3000/posts", {
+        fetch(" https://json-server-olgr.onrender.com/posts", {
             method: "POST",
             headers: {
                 "content-Type": "application/json",
