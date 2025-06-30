@@ -1,185 +1,171 @@
-// waiting for the DOM content tto be loaded
-
+// Wait for DOM to load
 function main() {
     displayPosts();
     addNewPostListener();
 }
 document.addEventListener("DOMContentLoaded", main);
 
-//fetching all the blog posts in the post-list container
+// Base URL
+const BASE_URL = "https://json-server-olgr.onrender.com/posts";
 
+// Display all posts
 function displayPosts() {
-    fetch("https://json-server-olgr.onrender.com/posts")
-    .then(res => res.json())
-    .then(posts => {
-        const postList = document.getElementById("post-list");
+    fetch(BASE_URL)
+        .then(res => res.json())
+        .then(posts => {
+            const postList = document.getElementById("post-list");
+            postList.innerHTML = ""; // Clear existing list
 
+            posts.forEach(post => {
+                const postItem = document.createElement("div");
+                postItem.textContent = post.title;
+                postItem.classList.add("post-item");
+                postItem.dataset.id = post.id;
 
-        posts.forEach(post => {
-            const postItem = document.createElement("div");
-            postItem.textContent = post.title;
-            postItem.classList.add("post-item");
-            postItem.dataset.id = post.id;
+                postItem.addEventListener("click", () => handlePostClick(post.id));
+                postList.appendChild(postItem);
+            });
 
-            //adding click event to show post details
-            postItem.addEventListener("click", () => handlePostClick(post.id));
-
-            postList.appendChild(postItem);
+            if (posts.length > 0) {
+                handlePostClick(posts[0].id);
+            }
         });
-
-        // showing the first post in the detail view section
-        if(posts.length > 0) {
-            handlePostClick(posts[0].id);
-        }
-    })
 }
 
-// showing post details when the title is clicked on the sidebar
-
+// Display a single post’s details
 function handlePostClick(id) {
-    fetch(`https://json-server-olgr.onrender.com/posts/${id}`)
-    .then(res => res.json())
-    .then(post => {
-        const postDetail = document.getElementById("post-detail");
-
-        //clearing old content
-        postDetail.innerHTML = "";
-
-        //creating elements for the post
-
-        //title
-        const title = document.createElement("h2");
-        title.textContent = post.title;
-
-        //author
-        const author = document.createElement("p");
-        author.textContent = `By: ${post.author}`;
-
-        //image
-        const image = document.createElement("img");
-        image.src = post.image || "";
-        image.alt = post.title;
-        image.style.maxWidth = "100%";
-
-        //content
-        const content = document.createElement("p");
-        content.textContent = post.content;
-
-        //edit button
-        const editBtn =  document.createElement("button");
-        editBtn.textContent = "Edit";
-        editBtn.addEventListener("click", () => enableEditing(post));
-
-        //appending all created elements to post-detail
-        postDetail.append(title, author, image,content, editBtn);
-
-
-    })
+    fetch(`${BASE_URL}/${id}`)
+        .then(res => res.json())
+        .then(post => {
+            renderPostDetail(post);
+        });
 }
 
-//function for editing the content
+// Render a post in #post-detail
+function renderPostDetail(post) {
+    const postDetail = document.getElementById("post-detail");
+    postDetail.innerHTML = "";
+
+    const title = document.createElement("h2");
+    title.textContent = post.title;
+
+    const author = document.createElement("p");
+    author.textContent = `By: ${post.author}`;
+
+    const image = document.createElement("img");
+    image.src = post.image || "";
+    image.alt = post.title;
+    image.style.maxWidth = "100%";
+
+    const content = document.createElement("p");
+    content.textContent = post.content;
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.addEventListener("click", () => enableEditing(post));
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", () => handleDelete(post.id));
+
+    postDetail.append(title, author, image, content, editBtn, deleteBtn);
+}
+
+// Enable editing post
 function enableEditing(post) {
     const form = document.getElementById("edit-post-form");
     form.classList.remove("hidden");
 
-    //prefilling the form to be edited
     document.getElementById("edit-title").value = post.title;
     document.getElementById("edit-content").value = post.content;
 
-    //submitting 
     form.onsubmit = (event) => {
         event.preventDefault();
 
-        //getting the updates values
         const updatedTitle = document.getElementById("edit-title").value;
         const updatedContent = document.getElementById("edit-content").value;
 
-        //the updating the DOM
-        const postDetail = document.getElementById("post-detail");
-        postDetail.querySelector("h2").textContent = updatedTitle;
-        postDetail.querySelector("p:nth-of-type(2)").textContent = updatedContent;
+        // Update DOM
+        renderPostDetail({
+            ...post,
+            title: updatedTitle,
+            content: updatedContent
+        });
 
+        // PATCH to server
+        fetch(`${BASE_URL}/${post.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: updatedTitle,
+                content: updatedContent
+            })
+        });
 
-        //hide the form
-        form.classList.add("hidden");
-        form.reset(); 
-    };
-
-    //canccel button
-    const cancelBtn = document.getElementById("cancel-edit");
-    cancelBtn.addEventListener("click", () => {
         form.classList.add("hidden");
         form.reset();
-    });
+    };
 
+    const cancelBtn = document.getElementById("cancel-edit");
+    cancelBtn.onclick = () => {
+        form.classList.add("hidden");
+        form.reset();
+    };
 }
 
-//adding new post
+// Add new post
 function addNewPostListener() {
     const form = document.getElementById("new-post-form");
 
     form.addEventListener("submit", (event) => {
-        event.preventDefault;
+        event.preventDefault();
 
-        //input values
         const title = form.title.value;
         const author = form.author.value;
         const image = form.image.value;
         const content = form.content.value;
 
-
-        //POST request
-        fetch(" https://json-server-olgr.onrender.com/posts", {
+        fetch(BASE_URL, {
             method: "POST",
             headers: {
-                "content-Type": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 title,
                 author,
                 image,
-                content,
-            }),
+                content
+            })
         })
         .then(res => res.json())
         .then(newPost => {
-            //adding to post list
             const postList = document.getElementById("post-list");
             const postItem = document.createElement("div");
             postItem.textContent = newPost.title;
             postItem.classList.add("post-item");
             postItem.dataset.id = newPost.id;
 
-
             postItem.addEventListener("click", () => handlePostClick(newPost.id));
             postList.appendChild(postItem);
 
-            // Show in post detail
-            const postDetail = document.getElementById("post-detail");
-            postDetail.innerHTML = "";
-
-            const titleEl = document.createElement("h2");
-            titleEl.textContent = newPost.title;
-
-            const authorEl = document.createElement("p");
-            authorEl.textContent = `By: ${newPost.author}`;
-
-            const imageEl = document.createElement("img");
-            imageEl.src = newPost.image || "";
-            imageEl.alt = newPost.title;
-            imageEl.style.maxWidth = "100%";
-
-            const contentEl = document.createElement("p");
-            contentEl.textContent = newPost.content;
-
-            const editBtn = document.createElement("button");
-            editBtn.textContent = "Edit";
-            editBtn.addEventListener("click", () => enableEditing(newPost));
-
-            postDetail.append(titleEl, authorEl, imageEl, contentEl, editBtn);
-
-            // Reset form
+            renderPostDetail(newPost);
             form.reset();
-        })
+        });
+    });
+}
+
+// Delete a post
+function handleDelete(id) {
+    fetch(`${BASE_URL}/${id}`, {
+        method: "DELETE"
+    })
+    .then(() => {
+        const postItem = document.querySelector(`[data-id="${id}"]`);
+        if (postItem) postItem.remove();
+
+        const postDetail = document.getElementById("post-detail");
+        postDetail.innerHTML = "<p>Select a post to view its details.</p>";
     });
 }
